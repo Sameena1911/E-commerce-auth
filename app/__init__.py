@@ -21,11 +21,15 @@ def create_app():
     app = Flask(__name__, template_folder='templates', static_folder='static')
     
     # Application configuration
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'fallback_secret_key')
+    secret_key = 'mysecretkey'
+    print(f"SECRET_KEY: {secret_key}")  # Debugging output
+    app.config['SECRET_KEY'] = secret_key
+    app.config['WTF_CSRF_ENABLED'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 587
     app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USE_SSL'] = False  # Disable SSL when using TLS
     app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')  # Add your email
     app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')  # Add your email password or app-specific password
     app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
@@ -51,18 +55,20 @@ def create_app():
     # Register blueprints
     from .views import main
     from .auth import auth
+    from .password import password
     from .admin import admin
 
     app.register_blueprint(main)
     app.register_blueprint(auth, url_prefix="/auth")
     app.register_blueprint(admin)
+    app.register_blueprint(password,url_prefix="/password")
 
     # Database creation and admin user setup
     with app.app_context():
         db.create_all()  # Creates database tables
         from .admin import create_admin_user  # Assuming this function exists in admin.py
         create_admin_user()
-    print(app.url_map)
+    #print(app.url_map)
 
 
     return app

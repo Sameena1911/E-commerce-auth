@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+
 from . import db
 
 class User(UserMixin, db.Model):
@@ -11,6 +12,8 @@ class User(UserMixin, db.Model):
     location = db.Column(db.String(100), nullable=False)
     dob = db.Column(db.Date, nullable=False)
     gender = db.Column(db.String(10), nullable=False)
-
+    reset_token = db.Column(db.String(128), nullable=True)
+ 
+    
     def __repr__(self):
         return f'<User {self.username}>'
