@@ -13,7 +13,7 @@ class User(UserMixin, db.Model):
     dob = db.Column(db.Date, nullable=False)
     gender = db.Column(db.String(10), nullable=False)
     reset_token = db.Column(db.String(128), nullable=True)
- 
+    status = db.Column(db.String(20), default='pending')
     
     def __repr__(self):
         return f'<User {self.username}>'

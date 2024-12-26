@@ -24,7 +24,7 @@ def customer_dashboard():
 @main.route('/delivery_dashboard')
 def delivery_dashboard():
     return render_template('delivery_dashboard.html')  # Create this template
- 
+
 @main.route('/default_dashboard')
 def default_dashboard():
     return render_template('default_dashboard.html')  # Create this template

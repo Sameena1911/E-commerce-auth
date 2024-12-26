@@ -57,12 +57,12 @@ def create_app():
     from .auth import auth
     from .password import password
     from .admin import admin
-
+    from .request import request
     app.register_blueprint(main)
     app.register_blueprint(auth, url_prefix="/auth")
     app.register_blueprint(admin)
     app.register_blueprint(password,url_prefix="/password")
-
+    app.register_blueprint(request,url_prefix="/request")
     # Database creation and admin user setup
     with app.app_context():
         db.create_all()  # Creates database tables

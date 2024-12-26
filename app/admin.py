@@ -27,4 +27,5 @@ def admin_dashboard():
     if session.get('role') != 'admin':
         flash('Unauthorized access!', 'danger')
         return redirect(url_for('auth.login'))
-    return render_template('admin.html', username=session.get('username'))
+    delivery_requests = User.query.filter_by(role='delivery_person', status='pending').all()
+    return render_template('admin.html',delivery_requests=delivery_requests ,username=session.get('username'))

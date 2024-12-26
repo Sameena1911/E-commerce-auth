@@ -31,6 +31,10 @@ def register():
         # Add the new user to the database
         db.session.add(new_user)
         db.session.commit()
+        if form.role.data == 'delivery_person':
+            flash('Registration successful! Your status is pending for admin approval.', 'info')
+            return redirect(url_for('auth.login'))
+
         flash('Registration successful!', 'success')
         return redirect(url_for('auth.login'))
     print("Form errors:", form.errors)
@@ -42,21 +46,22 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
+            if user.role == 'delivery_person' and user.status == 'pending':
+                flash('Your request is pending approval. Please wait.', 'warning')
+                return redirect(url_for('auth.login'))
+            elif user.role == 'delivery_person' and user.status == 'rejected':
+                flash('Your request was rejected. Please register again.', 'danger')
+                return redirect(url_for('auth.register'))
             login_user(user)
-            flash('Login successful!', 'success')
-            session['role'] = user.role  # Store the user's role in the session
-            session['username'] = user.username  # Store the user's username in the session
-            # Redirect based on user role
-            
-            if user.role == 'customer':
-                return redirect(url_for('main.customer_dashboard'))
-            elif user.role == 'delivery':
+             # Store username in the session
+            session['username'] = user.username
+            session['role'] = user.role
+            if user.role == 'admin':
+                return redirect(url_for('admin.admin_dashboard'))
+            elif user.role == 'delivery_person':
                 return redirect(url_for('main.delivery_dashboard'))
-            else:
-                return redirect(url_for('main.default_dashboard'))  # Fallback dashboard
-            
-        else:
-            flash('Invalid email or password!', 'danger')
+            return redirect(url_for('main.customer_dashboard'))
+        flash('Invalid email or password.', 'danger')
     return render_template('login.html', form=form)
 
 
