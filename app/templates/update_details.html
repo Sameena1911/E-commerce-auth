@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Details</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff; /* Light blue background for the page */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 600px; /* Increased the max-width to make the form wider */
+    width: 100%; /* Ensure the form is responsive */
+    margin: auto;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6); /* Soft gradient background */
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Elevated shadow for a polished look */
+    padding: 30px;
+    border: 1px solid #ddd;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2rem; /* Larger heading */
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase; /* Optional for emphasis */
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Increased spacing between fields */
+}
+
+.form-group label {
+    flex: 1;
+    font-size: 1.1rem; /* Larger font for labels */
+    font-weight: bold;
+    color: #555;
+    text-align: left;
+    margin-right: 10px;
+}
+
+.form-control {
+    flex: 2;
+    padding: 12px; /* Bigger input boxes */
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px #4CAF50;
+}
+.btn {
+    display: inline-block;  /* Change from block to inline-block */
+    width: auto;            /* Ensure buttons have auto width based on content */
+    margin: 20px auto 0;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.btn.btn-secondary {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn.btn-secondary:hover {  /* Correct the selector from button.btn-secondary to .btn.btn-secondary */
+    background-color: #e53935;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="title">Update Your Details</h2>
+        <form method="POST" action="">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="username">Name:</label>
+                <input type="text" name="username" id="username" class="form-control" value="{{ user.username }}">
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" class="form-control" value="{{ user.email }}">
+            </div>
+
+            <!-- Contact Field -->
+            <div class="form-group">
+                <label for="contact">Contact:</label>
+                <input type="text" name="contact" id="contact" class="form-control" value="{{ user.contact }}">
+            </div>
+
+            <!-- Location Field -->
+            <div class="form-group">
+              <label for="location">Location:</label>
+              <select name="location" id="location" class="form-control">
+                  <option value="" disabled selected>Select your city</option>
+                  <option value="Mumbai" {% if user.location == 'Mumbai' %}selected{% endif %}>Mumbai</option>
+                  <option value="Delhi" {% if user.location == 'Delhi' %}selected{% endif %}>Delhi</option>
+                  <option value="Bangalore" {% if user.location == 'Bangalore' %}selected{% endif %}>Bangalore</option>
+                  <option value="Hyderabad" {% if user.location == 'Hyderabad' %}selected{% endif %}>Hyderabad</option>
+                  <option value="Ahmedabad" {% if user.location == 'Ahmedabad' %}selected{% endif %}>Ahmedabad</option>
+                  <option value="Chennai" {% if user.location == 'Chennai' %}selected{% endif %}>Chennai</option>
+                  <option value="Kolkata" {% if user.location == 'Kolkata' %}selected{% endif %}>Kolkata</option>
+                  <option value="Surat" {% if user.location == 'Surat' %}selected{% endif %}>Surat</option>
+                  <option value="Pune" {% if user.location == 'Pune' %}selected{% endif %}>Pune</option>
+                  <option value="Jaipur" {% if user.location == 'Jaipur' %}selected{% endif %}>Jaipur</option>
+                  <option value="Lucknow" {% if user.location == 'Lucknow' %}selected{% endif %}>Lucknow</option>
+                  <option value="Kanpur" {% if user.location == 'Kanpur' %}selected{% endif %}>Kanpur</option>
+                  <option value="Nagpur" {% if user.location == 'Nagpur' %}selected{% endif %}>Nagpur</option>
+                  <option value="Indore" {% if user.location == 'Indore' %}selected{% endif %}>Indore</option>
+                  <option value="Thane" {% if user.location == 'Thane' %}selected{% endif %}>Thane</option>
+                  <option value="Bhopal" {% if user.location == 'Bhopal' %}selected{% endif %}>Bhopal</option>
+                  <option value="Visakhapatnam" {% if user.location == 'Visakhapatnam' %}selected{% endif %}>Visakhapatnam</option>
+                  <option value="Vadodara" {% if user.location == 'Vadodara' %}selected{% endif %}>Vadodara</option>
+                  <option value="Ghaziabad" {% if user.location == 'Ghaziabad' %}selected{% endif %}>Ghaziabad</option>
+                  <option value="Ludhiana" {% if user.location == 'Ludhiana' %}selected{% endif %}>Ludhiana</option>
+                  <option value="Agra" {% if user.location == 'Agra' %}selected{% endif %}>Agra</option>
+                  <option value="Nashik" {% if user.location == 'Nashik' %}selected{% endif %}>Nashik</option>
+                  <option value="Faridabad" {% if user.location == 'Faridabad' %}selected{% endif %}>Faridabad</option>
+                  <option value="Meerut" {% if user.location == 'Meerut' %}selected{% endif %}>Meerut</option>
+                  <option value="Rajkot" {% if user.location == 'Rajkot' %}selected{% endif %}>Rajkot</option>
+                  <option value="Kalyan" {% if user.location == 'Kalyan' %}selected{% endif %}>Kalyan</option>
+                  <option value="Vasai-Virar" {% if user.location == 'Vasai-Virar' %}selected{% endif %}>Vasai-Virar</option>
+                  <option value="Varanasi" {% if user.location == 'Varanasi' %}selected{% endif %}>Varanasi</option>
+                  <option value="Srinagar" {% if user.location == 'Srinagar' %}selected{% endif %}>Srinagar</option>
+                  <option value="Aurangabad" {% if user.location == 'Aurangabad' %}selected{% endif %}>Aurangabad</option>
+                  <option value="Dhanbad" {% if user.location == 'Dhanbad' %}selected{% endif %}>Dhanbad</option>
+                  <option value="Amritsar" {% if user.location == 'Amritsar' %}selected{% endif %}>Amritsar</option>
+                  <option value="Navi Mumbai" {% if user.location == 'Navi Mumbai' %}selected{% endif %}>Navi Mumbai</option>
+                  <option value="Allahabad" {% if user.location == 'Allahabad' %}selected{% endif %}>Allahabad</option>
+                  <option value="Howrah" {% if user.location == 'Howrah' %}selected{% endif %}>Howrah</option>
+                  <option value="Ranchi" {% if user.location == 'Ranchi' %}selected{% endif %}>Ranchi</option>
+                  <option value="Coimbatore" {% if user.location == 'Coimbatore' %}selected{% endif %}>Coimbatore</option>
+                  <option value="Jabalpur" {% if user.location == 'Jabalpur' %}selected{% endif %}>Jabalpur</option>
+                  <option value="Gwalior" {% if user.location == 'Gwalior' %}selected{% endif %}>Gwalior</option>
+                  <option value="Vijayawada" {% if user.location == 'Vijayawada' %}selected{% endif %}>Vijayawada</option>
+                  <option value="Jodhpur" {% if user.location == 'Jodhpur' %}selected{% endif %}>Jodhpur</option>
+                  <option value="Madurai" {% if user.location == 'Madurai' %}selected{% endif %}>Madurai</option>
+                  <option value="Raipur" {% if user.location == 'Raipur' %}selected{% endif %}>Raipur</option>
+                  <option value="Kota" {% if user.location == 'Kota' %}selected{% endif %}>Kota</option>
+                  <option value="Guwahati" {% if user.location == 'Guwahati' %}selected{% endif %}>Guwahati</option>
+                  <option value="Chandigarh" {% if user.location == 'Chandigarh' %}selected{% endif %}>Chandigarh</option>
+                  <option value="Solapur" {% if user.location == 'Solapur' %}selected{% endif %}>Solapur</option>
+                  <option value="Hubli-Dharwad" {% if user.location == 'Hubli-Dharwad' %}selected{% endif %}>Hubli-Dharwad</option>
+              </select>
+          </div>
+            <!-- Date of Birth Field -->
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" name="dob" id="dob" class="form-control" value="{{ user.dob }}">
+            </div>
+
+            <!-- Gender Field -->
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select name="gender" id="gender" class="form-control">
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="Male" {% if user.gender == 'Male' %}selected{% endif %}>Male</option>
+                    <option value="Female" {% if user.gender == 'Female' %}selected{% endif %}>Female</option>
+                    <option value="Other" {% if user.gender == 'Other' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group button-group">
+              <button type="submit" class="btn">Update</button>
+              <a href="/auth/profile/{{ user.id }}" class="btn btn-secondary">Go Back to Profile</a>
+          </div>
+        </form>
+    </div>
+</body>
+</html>

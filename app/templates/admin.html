@@ -3,137 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <style>
-        /* General Body Styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        /* Dashboard Heading */
-        h2 {
-            text-align: center;
-            margin-top: 20px;
-            color: #4CAF50;
-        }
-
-        /* Flash Messages */
-        .flash-messages {
-            width: 80%;
-            margin: 20px auto;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        
-        .alert {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .alert-success {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .alert-danger {
-            background-color: #f44336;
-            color: white;
-        }
-
-        .alert-warning {
-            background-color: #ff9800;
-            color: white;
-        }
-
-        /* Table Styling */
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        td {
-            background-color: #fff;
-        }
-
-        /* Form Button Styling */
-        button {
-            padding: 8px 16px;
-            margin: 5px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        button[type="submit"]:first-child {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        button[type="submit"]:last-child {
-            background-color: #f44336;
-            color: white;
-        }
-
-        button:hover {
-            opacity: 0.8;
-        }
-    </style>
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}">
 </head>
 <body>
-    <h2>Admin Dashboard</h2>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <h1 class="website-name">UrbanThreads</h1>
+        </div>
+        <div class="navbar-center">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search...">
+                <button class="search-btn">Search</button>
+            </div>
+        </div>
 
-    {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-        <div class="flash-messages">
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
+        {% if current_user.is_authenticated %}
+        <div class="navbar-right">
+            <button class="btn cart-btn">Cart</button>
+            <a href="{{ url_for('auth.logout') }}" class="btn logout-btn">Logout</a>
+            <a href="{{ url_for('auth.profile', id=current_user.id) }}" class="btn profile-btn">Profile</a>
+        </div>
+        {% else %}
+        <div class="navbar-right">
+            <button class="btn cart-btn">Cart</button>
+            <a href="{{ url_for('auth.register') }}" class="btn register-btn">Register</a>
+            <a href="{{ url_for('auth.login') }}" class="btn login-btn">Login</a>
         </div>
         {% endif %}
-    {% endwith %}
+    </nav>
 
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-        </tr>
-        {% for user in delivery_requests %}
-        <tr>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>
-                <!-- Approve Action -->
-                <form method="POST" action="{{ url_for('request.approve_user', user_id=user.id) }}">
-                    <button type="submit">Approve</button>
-                </form>
-                <!-- Reject Action -->
-                <form method="POST" action="{{ url_for('request.reject_user', user_id=user.id) }}">
-                    <button type="submit">Reject</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <!-- Main Content -->
+    {% if current_user.is_authenticated %}
+        <!-- Check if the user is an admin -->
+        <h2>Admin Dashboard</h2>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            {% for user in delivery_requests %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <form method="POST" action="#">
+                        <button type="submit">Approve</button>
+                    </form>
+                    <form method="POST" action="#">
+                        <button type="submit">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+    {% endif %}
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 UrbanThreads. All rights reserved.</p>
+    </footer>
 </body>
 </html>

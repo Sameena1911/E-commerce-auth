@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f8ff;
+        }
+
+        .container {
+    width: 90%;
+    max-width: 850px;
+    background: #d0e2f1;
+    border: 1px solid #5eacf1;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Larger shadow for a lifted effect */
+    margin: 20px 0;
+    position: relative; /* Ensures z-index works */
+    z-index: 10; /* Lifts it above other content */
+}
+
+
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em; /* Increased font size for a bigger look */
+    color: #333;
+    font-weight: bold; /* Make the font bold for a stronger presence */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+    transition: all 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+header h1:hover {
+    color: #ff0084; /* Change color on hover */
+    text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+        .center-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.center-buttons button {
+    padding: 12px 24px;
+    background-color: #4147e8;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: all 0.3s ease-in-out; /* Smooth transition for effects */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.center-buttons button:hover {
+    background-color: #3360e5; /* Slightly darker blue on hover */
+    transform: translateY(-4px); /* Lift the button on hover */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+.center-buttons button:active {
+    transform: translateY(2px); /* Slightly lower when clicked */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Lighter shadow when clicked */
+}
+
+
+        ul.info {
+    list-style: none; /* Remove list item markers */
+    padding: 20px;
+    /* border: 1px solid #393636; */
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Display two items per row */
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+ul.info li {
+    background: #ffffff;
+    padding: 15px;
+    border: 1px solid #9c9c9c;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row; /* Keep label and value in a row */
+    justify-content: space-between; /* Ensures the label and value are spaced apart evenly */
+    align-items: center; /* Aligns the items vertically */
+    text-align: left;
+}
+ul.info li:hover {
+transform: scale(1.03); /* Scale the item slightly when hovered */
+box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Increase shadow on hover */
+}
+
+ul.info .label {
+    font-weight: bold;
+    color: #555;
+    margin-right: 10px; /* Adds space between label and value */
+    flex-basis: 30%; /* Makes label occupy 30% of the container */
+}
+
+ul.info .value {
+    font-size: 0.95rem;
+    color: #333;
+    flex-basis: 65%; /* Makes value occupy 65% of the container */
+    word-wrap: break-word; /* Ensures text breaks to the next line if needed */
+}
+
+
+
+        section {
+            border: 1px solid #393636;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+
+        section h2 {
+            margin: 0 0 15px;
+            font-size: 1.4em;
+            color: #333;
+        }
+
+        section div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        #account-settings div, #performance div, #support div {
+    display: flex;
+    justify-content: space-between; /* Space out labels and buttons */
+    align-items: center; /* Vertically align items */
+    margin-bottom: 20px; /* Increase space between rows */
+}
+
+#account-settings button, #performance button, #support button {
+    width: 220px; /* Increased width for more spacious buttons */
+    padding: 12px 20px; /* More padding for a better click area */
+    text-align: center; /* Center text inside button */
+    background-color: #007bff; /* Button color */
+    color: #fff; /* Text color */
+    border: black 1px solid;
+    border-radius: 8px; /* Add rounded corners */
+    cursor: pointer; /* Pointer on hover */
+    font-size: 1.1em; /* Slightly larger font size for better visibility */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+#account-settings button:hover, #performance button:hover, #support button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-4px); /* Lift button on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+
+#account-settings span, #performance span, #support span {
+    flex: 1; /* Label takes up remaining space */
+    text-align: left; /* Align label text to the left */
+    font-size: 1em; /* Consistent font size */
+    color: #333; /* Label text color */
+    padding-right: 15px; /* Space between label and button */
+}
+
+        section div span {
+            flex: 1;
+            text-align: left;
+            font-size: 1em;
+            color: #555;
+        }
+
+        section div button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+
+        footer {
+text-align: center;
+margin-top: 30px; /* Increase space from the content above */
+}
+
+footer button {
+padding: 12px 24px; /* Increased padding for better click area */
+background-color: #dc3545; /* Button color */
+color: #fff; /* Text color */
+border: none; /* Remove default border */
+border-radius: 8px; /* Add rounded corners */
+cursor: pointer; /* Pointer on hover */
+font-size: 1.1em; /* Slightly larger font size for better visibility */
+transition: all 0.3s ease; /* Smooth transition for hover effects */
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+footer button:hover {
+background-color: #c82333; /* Darker red on hover */
+transform: translateY(-4px); /* Lift button on hover */
+box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+footer button:active {
+transform: translateY(2px); /* Slightly lower when clicked */
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Lighter shadow when clicked */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>{{ user.username }}'s Profile</h1>
+        </header>
+
+        <div class="center-buttons">
+            <button>Cart</button>
+            <button>Orders</button>
+            <button>Wishlist</button>
+        </div>
+        {% if user.role == 'delivery' %}
+        <div class="center-buttons">
+            <button>Delivery Dashboard</button>
+            <button>Delivery Requests</button>
+            <button>Active Delivery</button>
+            <button>Completed Delivery</button>
+          
+        </div>
+        {% endif %}
+        <section id="personal-details">
+            <h2>Personal Details</h2>
+        <ul class="info">
+            
+            <li>
+                <span class="label">Name:</span>
+                <span class="value">{{ user.username }}</span>
+            </li>
+            <li>
+                <span class="label">Email:</span>
+                <span class="value">{{ user.email }}</span>
+            </li>
+            <li>
+                <span class="label">Role:</span>
+                <span class="value">{{ user.role }}</span>
+            </li>
+            <li>
+                <span class="label">Contact:</span>
+                <span class="value">{{ user.contact }}</span>
+            </li>
+            <li>
+                <span class="label">Location:</span>
+                <span class="value">{{ user.location }}</span>
+            </li>
+            <li>
+                <span class="label">Date of Birth:</span>
+                <span class="value">{{ user.dob }}</span>
+            </li>
+            <li>
+                <span class="label">Gender:</span>
+                <span class="value">{{ user.gender }}</span>
+            </li> 
+        </ul>
+        </section>
+
+        <section id="account-settings">
+            <h2>Account Settings</h2>
+            <div>
+                <span>Change Password</span>
+                
+                    <button class="change-password-btn">Change Password</button>
+                </a>
+            </div>
+            <div>
+                <span>Update Personal Details</span>
+                <form action="{{ url_for('auth.update_details', id=user.id) }}" method="get" style="display: inline;">
+                    <button type="submit" class="btn btn-primary">Update Details</button>
+                </form>
+            </div>
+            <div>
+                <span>Delete Account</span>
+                <a href="{{ url_for('auth.confirm_delete', id=user.id) }}">
+                    <button class="delete-account-btn">Delete Account</button>
+                </a>
+            </div>
+        </section>
+
+        {% if user.role == 'delivery' %}
+<section id="performance">
+<h2>Performance</h2>
+<div>
+    <span>Performance Matrix</span>
+    <button class="performance-btn">Performance Matrix</button>
+</div>
+<div>
+    <span>Earnings Summary</span>
+    <button class="earnings-btn">Earnings</button>
+</div>
+</section>
+{% endif %}
+
+        
+
+        <section id="support">
+            <h2>Customer Support</h2>
+            <div>
+                <span>FAQ</span>
+                <button>FAQ</button>
+            </div>
+        </section>
+
+        <footer>
+
+            <form action="{{ url_for('auth.logout') }}" class="btn logout-btn" method="get" style="display: inline;">
+                <button class="logout-btn">Logout</button>
+            </form>
+           
+        </footer>
+    </div>
+</body>
+</html>

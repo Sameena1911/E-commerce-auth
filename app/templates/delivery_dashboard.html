@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    "hello {{ session['username'] }}, this is your  {{ session['role'] | capitalize }}  dashboard"
+    "hello {{ session['username'] }}, this is your  {{ session['role'] | capitalize }} dashboard"
+
+    <a href="{{ url_for('auth.profile', id=session['user_id']) }}" class="btn">View Profile</a>
+
 </body>
 </html>
