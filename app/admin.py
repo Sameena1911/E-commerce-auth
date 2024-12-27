@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, session
 from .models import User
+from flask_login import login_required
 from . import db, bcrypt
 from datetime import datetime
 

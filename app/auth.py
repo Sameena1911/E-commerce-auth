@@ -27,7 +27,8 @@ def register():
             contact=form.contact.data,
             location=form.location.data,
             dob=form.dob.data,
-            gender=form.gender.data
+            gender=form.gender.data,
+            status='pending' if form.role.data == 'delivery_person' else 'active'
         )
         
         # Add the new user to the database
@@ -61,7 +62,7 @@ def login():
             session['user_id'] = user.id
             session['role'] = user.role
             if user.role == 'admin':
-                return redirect(url_for('main.admin'))
+                return redirect(url_for('admin.admin_dashboard'))
             elif user.role == 'delivery_person':
                 return redirect(url_for('main.home'))
             return redirect(url_for('main.home'))
