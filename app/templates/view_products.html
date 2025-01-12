@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='user.css') }}">
+
+</head>
+<body>
+    {% extends "home.html" %}
+
+    {% block title %}View Products{% endblock %}
+    
+    {% block content %}
+    <div class="container">
+<h1>All Products</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Rating</th>
+            <th>Discount</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+            <tr>
+                <!-- Display the first image or a placeholder if no image -->
+                <td>
+                    {% if product.images and product.images|length > 0 %}
+                        <img src="{{ url_for('static', filename=product.images[0].image_url) }}" alt="Product Image" style="width: 120px; height: 120px; object-fit: cover;">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="No Image" style="width: 50px; height: 50px; object-fit: cover;">
+                    {% endif %}
+                </td>
+                
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.quantity }}</td>
+                
+               
+                <td>{{ product.rating }}</td>
+                <td>{{ product.discount }}</td>
+                <td>
+                    <form action="{{ url_for('admin.update_product', id=product.id) }}" method="get" style="display: inline; padding: 0;">
+                        <button type="submit" 
+                            class="btn btn-warning" 
+                            style="
+                                
+                                border: none; 
+                                color: white; 
+                                padding: 5px 10px; 
+                                cursor: pointer; 
+                                transition: all 0.3s ease-in-out; 
+                            "
+                            onmouseover="this.style.transform='scale(1.1)';"
+                            onmouseout="this.style.transform='scale(1)';"
+                        >
+                            Update
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
+</body>

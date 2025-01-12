@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FusionFits{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            /* font-family: 'Arial', sans-serif;
+            background-color: #FFDAB9;
+            color: #333; */
+        }
+        main {
+    min-height: 90vh;
+    padding: 20px;
+    display: flex; /* Enables flexbox */
+    justify-content: center; /* Centers horizontally */
+    
+}
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0d2357; 
+            color: white;
+            padding: 10px 20px;
+            flex-wrap: wrap;
+            /* width: 100%; Span the entire width */
+        }
+        header {
+            background: #0d2357; 
+            width: 100%;
+        }
+        .logo a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .search-bar input {
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+            width: 300px;
+ 
+
+        }
+        .search-bar button {
+            padding: 5px 8px;
+            border: none;
+            background-color: #fff;
+            cursor: pointer;
+            border-radius: 100%;
+            margin-left: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+        .nav-links .dropdown .dropbtn {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            padding: 0;
+            background: none;
+            margin: 0;
+            border: none;
+        }
+        /* .dropdown {
+            position: relative;
+        }
+        .dropbtn {
+            /* background-color: none; */
+            /* border: none; */
+            /* color: white; */
+            /*cursor: pointer;
+            font: 1em;
+        } */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color:  #FFDAB9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            right: 0;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        footer {
+            background-color:  #011032; 
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            position: relative;
+        }
+        .categories-nav {
+            background-color: #2a4686;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            /* background-color: #13327b; /* Blue bar */
+            display: flex;
+            justify-content: center;
+            /* padding: 10px 0; */
+            flex-wrap: wrap; 
+        }
+        .categories-nav ul {
+            list-style: none;
+            display: flex;
+            padding: 0.5rem;
+            /* gap: 20px; */
+            flex-wrap: wrap;
+        }
+        .categories-nav li {
+            margin: 0 15px;
+            color: #fff;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        .categories-nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        .categories-nav a:hover {
+            color: #f1c40f; /* Yellow on hover */
+        }
+        .categories-nav a.active {
+            color: #f1c40f; /* Highlighted color for the active category */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><a href="/">FusionFits</a></div>
+        <div class="search-bar">
+            <form action="/search" method="get">
+            <input type="text" name="q" placeholder="Search" />
+            <button><i class="fa fa-search"></i></button>
+        </form>
+        </div>
+        <ul class="nav-links">
+            <li><a href="cart.html">Cart <i class="fa-solid fa-cart-plus"></i></a></li>
+            <li><a href="/wishpage">Wishlist <i class="fa fa-heart"></i></a></li>
+            <li>
+              <div class="dropdown navbar-right">
+                <button class="dropbtn">Account <i class="fa fa-caret-down"></i></button>
+                <div class="dropdown-content">
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('auth.profile', id=current_user.id) }}">Profile</a>
+                        <a href="{{ url_for('auth.logout') }}">Logout</a>
+                        {% if current_user.role == 'admin' %}
+                            <a href="{{ url_for('admin.admin_dashboard') }}">Admin Dashboard</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ url_for('auth.register') }}">Register</a>
+                        <a href="{{ url_for('auth.login') }}">Login</a>
+                    {% endif %}
+                    <a href="#">Your Orders</a>
+                </div>
+            </div>
+            
+            </li>
+        </ul>
+    </nav>
+
+    <header>
+        <nav class="categories-nav">
+            <ul>
+                <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+                <li><a href="/gender/Male" class="{% if request.path == '/gender/Male' %}active{% endif %}">Men's Fashion</a></li>
+                <li><a href="/gender/Female" class="{% if request.path == '/gender/Female' %}active{% endif %}">Women's Fashion</a></li>
+                <li><a href="/category/Kids" class="{% if request.path == '/category/Kids' %}active{% endif %}">Kids's Fashion</a></li>
+                <li><a href="/category/Dress" class="{% if request.path == '/category/Dress' %}active{% endif %}">Dresses</a></li>
+                <li><a href="/category/Accessory" class="{% if request.path == '/category/Accessory' %}active{% endif %}">Accessories</a></li>
+                <li><a href="/category/Shoe" class="{% if request.path == '/category/Shoe' %}active{% endif %}">Shoes</a></li>
+            </ul>
+        </nav>
+    </header>
+    <p>{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}</p>
+    
+
+    <main>
+        {% block content %}
+        <!-- Content will be injected here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>FusionFits &copy; All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

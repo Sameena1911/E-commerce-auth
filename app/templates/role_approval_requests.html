@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Approval Requests</title>
+    <style>
+        .containe {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            width: 100%; /* Full width */
+    margin: 0; /* Remove margin */
+       
+            color: #0d2357;
+        }
+        .containe h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #0d2357;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .containe table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .containe th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        .containe th {
+            background-color: #0d2357;
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.05em;
+        }
+        .containe tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+        .containe tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+        .containe tr:hover {
+            background-color: #e3f2fd;
+            transition: background-color 0.3s ease;
+        }
+        .container button {
+            margin: 0 5px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .containe button[name="action"][value="approve"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .containe button[name="action"][value="approve"]:hover {
+            background-color: #45a049;
+        }
+        .containe button[name="action"][value="reject"] {
+            background-color: #f44336;
+            color: white;
+        }
+        .containe button[name="action"][value="reject"]:hover {
+            background-color: #d32f2f;
+        }
+        .containe form {
+            display: inline;
+        }
+    
+    </style>
+</head>
+<body>
+    {% extends "home.html" %}
+
+    {% block title %}Admin Dashboard{% endblock %}
+    
+    {% block content %}
+    <div class="containe">
+    <h1>Role Approval Requests</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Requested Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+            <tr>
+                <td>{{ request.user.username }}</td>
+                <td>{{ request.requested_role }}</td>
+                <td>{{ request.status }}</td>
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="request_id" value="{{ request.id }}">
+                        <button type="submit" name="action" value="approve">Approve</button>
+                        <button type="submit" name="action" value="reject">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+    <style>
+        .form-container {
+  width: 600px; /* Increased width for a larger form */
+  height: 400px;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6); /* Soft gradient background */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Elevated shadow for a polished look */
+  border: 1px solid #ddd;
+}
+    </style>
+</head>
+<body>
+    {% extends "home.html" %}
+
+    {% block title %}Admin Dashboard{% endblock %}
+    
+    {% block content %}
+    <div class="form-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
+        <li class="flash {{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+        <h2>Login</h2>
+        
+        <form id="loginForm" action="{{ url_for('auth.login') }}" method="POST"> <!-- Corrected action -->
+            {{ form.hidden_tag() }} <!-- CSRF token if using Flask-WTF -->
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                {{ form.email(class="form-control", id="email", required=True) }} <!-- Use Flask-WTF rendering -->
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                {{ form.password(class="form-control", id="password", required=True) }} <!-- Use Flask-WTF rendering -->
+            </div>
+
+            <div class="buttons">
+                <button type="submit">Login</button>
+                <button type="reset">Reset</button>
+                <button type="button" class="forgot-password" onclick="location.href='{{ url_for('password.forgot_password') }}'">
+                    Forgot Password
+                </button>
+                
+            </div>
+
+            <p>If you are not registered, <a href="{{ url_for('auth.register') }}">Register</a></p>
+        </form>
+    </div>
+    {% endblock %}
+</body>
+</html>

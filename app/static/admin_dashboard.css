@@ -1,0 +1,66 @@
+/* General Body Styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f4f8; /* Light grey background for the page */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Dashboard Container */
+.dashboard {
+  text-align: center;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 90%;
+}
+
+/* Button Styling */
+button, .btn {
+  display: inline-block;
+  padding: 15px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  background: linear-gradient(45deg, #007bff, #00c6ff); /* Gradient background */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Hover Effect */
+button:hover, .btn:hover {
+  background: linear-gradient(45deg, #0056b3, #007bff); /* Hover gradient */
+  transform: scale(1.1); /* Slight zoom effect */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Align Buttons in Rows */
+.dashboard button, .dashboard .btn {
+  width: calc(25% - 20px); /* Four buttons per row, with margin */
+  min-width: 120px;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .dashboard button, .dashboard .btn {
+      width: calc(50% - 20px); /* Two buttons per row on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard button, .dashboard .btn {
+      width: calc(100% - 20px); /* Full-width buttons on very small screens */
+  }
+}

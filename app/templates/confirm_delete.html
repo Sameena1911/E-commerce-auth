@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Account Deletion</title>
+
+    <style>
+        .form-container {
+  width: 600px; /* Increased width for a larger form */
+  height: 330px;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6); /* Soft gradient background */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Elevated shadow for a polished look */
+  border: 1px solid #ddd;
+}
+.title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-container p {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #555;
+  font-size: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input[type="password"]:focus {
+  border-color: #1565c0;
+  outline: none;
+}
+
+button[type="submit"] {
+  background: #e20808;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+button[type="submit"]:hover {
+  background: #b30606; /* Slightly darker shade for hover */
+  transform: scale(1.05); /* Subtle scaling effect */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow for hover */
+}
+
+button[type="submit"]:active {
+  transform: scale(0.98); /* Slight compression for click */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Reduced shadow for click */
+}
+
+a {
+  text-decoration: none;
+  color: #1565c0;
+  margin-top: 10px;
+  font-size: 1rem; /* Slightly larger font for better readability */
+  font-weight: 500; /* Adds a bit of emphasis */
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+a:hover {
+  color: #0d47a1; /* Darker shade for hover */
+  text-shadow: 0px 2px 4px rgba(13, 71, 161, 0.5); /* Subtle glow effect */
+}
+
+a:active {
+  color: #0b3c7a; /* Even darker shade for active state */
+  text-shadow: 0px 1px 2px rgba(11, 60, 122, 0.5); /* Slightly reduced glow */
+  transform: scale(0.98); /* Adds a click compression effect */
+}
+
+@media screen and (max-width: 768px) {
+  .form-container {
+    width: 90%; /* Full width for smaller screens */
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  input[type="password"],
+  button[type="submit"] {
+    font-size: 0.9rem;
+  }
+}
+    </style>
+</head>
+<body>
+    {% extends "home.html" %}
+
+    {% block title %}Admin Dashboard{% endblock %}
+    
+    {% block content %}
+    <div class="form-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="flash-message flash-{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <h1 class="title">Confirm Account Deletion</h1>
+        <p>Are you sure you want to delete your account, <strong>{{ user.username }}</strong>? This action cannot be undone.</p>
+        
+        <form method="POST">
+            <label for="password">Enter your password to confirm:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Confirm and Delete</button>
+            <a href="{{ url_for('auth.profile', id=user.id) }}">Cancel</a>
+        </form>
+    </div>
+    {%endblock%}
+</body>
+</html>

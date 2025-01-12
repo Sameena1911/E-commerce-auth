@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        h1 {
+    text-align: center;
+    margin-bottom: 20px; /* Add some space below the heading */
+}
+         /* Dashboard container */
+         .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        /* Buttons */
+        .dashboard button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hover effect for buttons */
+        .dashboard button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Button focus */
+        .dashboard button:focus {
+            outline: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+
+       
+    </style>
+   
+
+</head>
+<body>
+    {% extends "home.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <div class="form-container" style="">
+        <h1>Admin Dashboard</h1>
+    <div class="dashboard">
+        
+        <button onclick="location.href='{{ url_for('admin.role_approval_requests') }}'">Role Approval Requests</button>
+        <button onclick="location.href='{{ url_for('admin.user_details') }}'">
+            View User Details </button>
+
+        <!-- templates/admin_dashboard.html -->
+        <button onclick="location.href='{{ url_for('admin.add_product') }}'">Add New Product</button> 
+        
+        <button onclick="location.href='{{ url_for('admin.view_products') }}'">Update Product</button> 
+        <button onclick="location.href='{{ url_for('visualization.home') }}'">Visualization</button>
+
+    </div>
+</div>
+    {% endblock %}
+</body>
+</html>
